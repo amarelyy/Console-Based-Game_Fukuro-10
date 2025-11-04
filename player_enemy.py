@@ -14,7 +14,7 @@ class Player(Character):
 
         #musuh muncul jika langkah kelipatan 3 dan bukan kelipatan 5
         if self.steps % 3 == 0 and self.steps % 5 != 0:
-            print("⚔️  Musuh muncul di depanmu!")
+            print("Musuh muncul!")
             return True
         else:
             print("Tidak ada musuh di sekitar.")
@@ -37,8 +37,6 @@ class Player(Character):
         else:
             return "ability"
                 
-
-
 class Enemy(Character):
     def __init__(self, name, hp, mana, attack, defense):
         super().__init__(name, hp, mana, attack, defense)
