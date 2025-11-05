@@ -95,7 +95,8 @@ class GameController:
         if self.player.is_alive():
             print("Kamu menang!")
         else:
-            print(" Kamu kalah...")
+            print("Kamu kalah...")
+            
 
     def start_game(self):
         """Main loop dari game (dari berjalan sampai bertarung)."""
@@ -104,8 +105,17 @@ class GameController:
             self.find_enemy()
             self.battle()
 
+            if self.player.is_alive() == False:
+                break
+
             # Tanya apakah mau lanjut jalan
+
             cont = input("Lanjutkan perjalanan? (y/n): ").lower()
+            while cont != "y" and cont != "n":
+                print("Pilihan tidak valid, silahkan pilih ulang")
+                cont = input("Lanjutkan perjalanan? (y/n): ").lower()
+                
+
             if cont != "y":
                 print("Petualangan berakhir. Terima kasih sudah bermain!")
-                break
+                break   
