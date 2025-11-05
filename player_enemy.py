@@ -22,7 +22,7 @@ class Player(Character):
 
     def choose_action(self):
         while True:
-            print("\n=== Your Turn ===")
+            print("\n=== Giliranmu ===")
             print("1. Attack")
             print("2. Ability")
             choice = input("Pilih aksi (1/2): ")
