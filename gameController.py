@@ -53,45 +53,37 @@ class GameController:
                 self.enemy._mana -= 10
             else:
                 self.enemy.attack(self.player)
+                
     def end_of_round(self):
-        """Akhir ronde: cooldown berkurang & mana regen."""
         self.fireblast.reduce_cooldown()
         self.heal.reduce_cooldown()
 
-        # Regen mana
         self.player._mana = min(self.player._mana + 5, 50)
         self.enemy._mana = min(self.enemy._mana + 5, 50)
 
         print(f"\nEnd of Round - {self.player.name}: {self.player._mana} mana, {self.enemy.name}: {self.enemy._mana} mana\n")
 
     def battle(self):
-        """Loop pertarungan utama antara Player dan Enemy."""
         print("\nPertarungan dimulai!")
         while self.player.is_alive() and self.enemy.is_alive():
             print(f"\n{self.player.name}: HP {self.player._hp}/{self.player.max_hp} | Mana {self.player._mana}")
             print(f"{self.enemy.name}: HP {self.enemy._hp} | Mana {self.enemy._mana}")
 
-            # Giliran player
             self.player_turn()
 
-            # Cek apakah enemy masih hidup
             if not self.enemy.is_alive():
                 print(f"{self.enemy.name} dikalahkan!")
                 break
 
-            # Giliran enemy
             self.enemy_turn()
 
-            # Cek apakah player masih hidup
             if not self.player.is_alive():
                 print(f"{self.player.name} tumbang! Game Over!")
                 break
 
-            # Akhir ronde
             self.end_of_round()
             time.sleep(0.5)
 
-        # Hasil akhir
         if self.player.is_alive():
             print("Kamu menang!")
         else:
@@ -99,7 +91,6 @@ class GameController:
             
 
     def start_game(self):
-        """Main loop dari game (dari berjalan sampai bertarung)."""
         print("=== Game Dimulai ===")
         while True:
             self.find_enemy()
@@ -107,8 +98,6 @@ class GameController:
 
             if self.player.is_alive() == False:
                 break
-
-            # Tanya apakah mau lanjut jalan
 
             cont = input("Lanjutkan perjalanan? (y/n): ").lower()
             while cont != "y" and cont != "n":
