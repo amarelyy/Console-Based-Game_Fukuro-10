@@ -16,14 +16,14 @@ class Character:
     def attack(self, target): # To attack another character.
         damage = max(0, self._attack - target._defense) # Damage = attack - target defense. Minimum damage is set to 0.
         target._hp -= damage
-        print(f"{self.name} attacks {target.name} for {damage} damage!")
+        print(f"{self.name} menyerang {target.name} dengan {damage} poin kerusakan!")
         return damage  
     
     def take_damage(self, amount): # Reduce HP given the amount of attack.
         self._hp -= amount
         if self._hp < 0:
             self._hp = 0
-        print(f"{self.name} takes {amount} damage! HP is now: {self._hp}")
+        print(f"{self.name} menerima {amount} poin kerusakan! poin nyawa sekarang: {self._hp}")
      
     def is_alive(self): # Check if the character is still alive. If HP > 0, yes.
         return self._hp > 0
@@ -41,17 +41,17 @@ class FireBlast(Ability):
     def use(self, caster, target):
         # Check if ability is on cooldown
         if self.cooldown > 0:
-            print(f"FireBlast is on cooldown! ({self.cooldown} turns left)")
+            print(f"FireBlast sedang dalam waktu jeda, ({self.cooldown} giliran lagi)")
             return False
         
         # Check if uses are exhausted
         if self.uses_left <= 0:
-            print(f"FireBlast has no uses left! (0/{self.max_uses})")
+            print(f"Pengunaan FireBlast telah habis! (0/{self.max_uses})")
             return False
         
         # Check if caster has enough mana
         if caster._mana < self.mana_cost:
-            print(f"Not enough mana! Need {self.mana_cost}, have {caster._mana}")
+            print(f"Mana tidak cukup! membutuhkan {self.mana_cost}, yang dipunya {caster._mana}")
             return False
         
         # Execute FireBlast
@@ -61,8 +61,8 @@ class FireBlast(Ability):
         self.uses_left -= 1
         self.cooldown = self.max_cooldown
         
-        print(f"{caster.name} uses FireBlast on {target.name}!")
-        print(f"Deals {damage} fire damage! Uses left: {self.uses_left}/{self.max_uses}")
+        print(f"{caster.name} menggunakan FireBlast ke {target.name}!")
+        print(f"Memberikan {damage} poin kerusakan! sisa penggunaan: {self.uses_left}/{self.max_uses}")
         return True
     
     def reduce_cooldown(self):
@@ -80,19 +80,19 @@ class Heal(Ability):
     def use(self, caster, target):
         # Check if ability is on cooldown
         if self.cooldown > 0:
-            print(f"Heal is on cooldown! ({self.cooldown} turns left)")
+            print(f"Heal sedang dalam waktu jeda, ({self.cooldown} giliran lagi)")
             return False
         
         # Check if caster has enough mana
         if caster._mana < self.mana_cost:
-            print(f"Not enough mana! Need {self.mana_cost}, have {caster._mana}")
+            print(f"Mana tidak cukup! membutuhkan {self.mana_cost}, yang dipunya {caster._mana}")
             return False
         
         # Check if HP is below 30%
         max_hp = caster._hp + 100  # Assuming max HP, you might need to track this properly
         hp_percentage = (caster._hp / max_hp) * 100
         if hp_percentage >= 30:
-            print(f"Heal can only be used when HP < 30%! Current HP: {hp_percentage:.1f}%")
+            print(f"Heal hanya bisa digunakan saat poin nyawa di bawah 30%, persentase poin nyawa sekarang: {hp_percentage:.1f}%")
             return False
         
         # Execute Heal
@@ -101,8 +101,8 @@ class Heal(Ability):
         caster._hp += heal_amount
         self.cooldown = self.max_cooldown
         
-        print(f"{caster.name} uses Heal!")
-        print(f"Restores {heal_amount} HP! Current HP: {caster._hp}")
+        print(f"{caster.name} menggunakan Heal!")
+        print(f"Menyembuhkan {heal_amount} poin nyawa! poin nyawa sekarang: {caster._hp}")
         return True
     
     def reduce_cooldown(self):
